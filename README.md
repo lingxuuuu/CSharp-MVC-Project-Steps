@@ -1,31 +1,10 @@
 #  CSharp-MVC-Project-Steps
 
 ## 1: dotnet new mvc --no-https -o {ProjectName}
+cd ProjectName
+code .
 
-## 2: Startup.cs
-```
-public class Startup
-{
-
-   public void ConfigureServices(IServiceCollection services)
-   {
-       services.AddSession();
-       services.AddMvc(options => options.EnableEndpointRouting = false);   
-   }
-
-   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-   {
-       if (env.IsDevelopment())
-       {
-           app.UseDeveloperExceptionPage();
-       }
-
-       app.UseSession(); //use session first 
-       app.UseMvc(); //always put usemvc at bottom
-} 
-```
-
-## 3: Entity FrameWork
+## 2: Entity FrameWork
 #### --Add Package:
 ```
 dotnet add package Pomelo.EntityFrameworkCore.MySql --version 3.1.1
@@ -73,47 +52,70 @@ namespace {Monster}.Models
 
 #### --Set up Json, remember to change the password and database
 ```
-"DBInfo": //don't forget, in the begining line
+"DBInfo": //don't forget "," in the begining line
     {
         "Name": "MySQLconnect",
         "ConnectionString": "server=localhost;userid=root;password=root;port=3306;database=db;SslMode=None"
     }
 ```
 
-#### -- Update Startup.cs
-Add this line:  services.AddDbContext<MyContext>(options => options.UseMySql (Configuration["DBInfo:ConnectionString"]));
+#### -- Startup.cs(It is better to change the startup.cs later to avoid errors)
 
 Startup.cs should now be:
 ```
-using {Monster}.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using {ProjectName}.Models; //get access to MyContext
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-// Other using statements
-namespace {Monsters}
+
+namespace {ProjectName}
 {
     public class Startup
     {
-        public Startup (IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-        public void ConfigureServices (IServiceCollection services)
-        {   
+        public void ConfigureServices(IServiceCollection services)
+        {
+            //we'll use this for logging in and registering
             services.AddSession();
-            services.AddDbContext<MyContext>(options => options.UseMySql (Configuration["DBInfo:ConnectionString"]));
+            services.AddDbContext<MyContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            //used for routing
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
-        public void Configure (IApplicationBuilder app, IWebHostEnvironment env)
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSession();
             app.UseStaticFiles();
-            app.UseMvc();
+
+            app.UseSession(); //use session first 
+            app.UseMvc(); //always put usemvc at bottom
+
+            // app.UseRouting();
+
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapGet("/", async context =>
+            //     {
+            //         await context.Response.WriteAsync("Hello World!");
+            //     });
+            // });
         }
     }
 }
@@ -152,14 +154,14 @@ dotnet ef migrations add YourMigrationName
 dotnet ef database update
 ```
 
-## 4: Creating a new table:
+## 3: Creating a new table:
 1. set up the Model class
 2. add it to Mycontext
 3. create migration: dotnet ef migrations add YourMigrationName
 4. update the DB: dotnet ef database update
 
 
-## 5: Template:
+## 4: Template:
 ```
 <!DOCTYPE html>
 <html>

@@ -88,6 +88,7 @@ Startup.cs should now be:
 using {Monster}.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+// Other using statements
 namespace Monsters
 {
     public class Startup
@@ -154,8 +155,8 @@ dotnet ef database update
 ## 4: Creating a new table:
 1. set up the Model class
 2. add it to Mycontext
-3. create migration
-4. update the DB
+3. create migration: dotnet add package Pomelo.EntityFrameworkCore.MySql --version 3.1.1
+4. update the DB: dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.5
 
 
 ## 5: Template:

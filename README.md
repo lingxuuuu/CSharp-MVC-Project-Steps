@@ -34,13 +34,13 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.5
 
 #### --Make Models:
 
-EXAMPLE: IN (Models/Monster.cs)
+EXAMPLE: IN (Models/{Monster}.cs)
 ```
 using System;
 using System.ComponentModel.DataAnnotations;
-namespace Monsters.Models
+namespace {Monsters}.Models
 {
-    public class Monster
+    public class {Monster}
     {
         [Key]
         public int MonsterId { get; set; }
@@ -89,7 +89,7 @@ using {Monster}.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 // Other using statements
-namespace Monsters
+namespace {Monsters}
 {
     public class Startup
     {
@@ -122,7 +122,7 @@ namespace Monsters
 #### --Set up HomeController.cs
 
 ```
-namespace Monsters.Controllers
+namespace {Monsters}.Controllers
 {
     public class HomeController : Controller
     {

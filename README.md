@@ -1,6 +1,6 @@
-# CSharp-MVC-Project-Steps
+#  CSharp-MVC-Project-Steps
 
-## 1:dotnet new mvc --no-https -o {ProjectName}
+## 1: dotnet new mvc --no-https -o {ProjectName}
 
 ## 2: Startup.cs
  public class Startup

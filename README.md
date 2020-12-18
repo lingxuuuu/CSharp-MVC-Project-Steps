@@ -1,8 +1,10 @@
 #  CSharp-MVC-Project-Steps
 
 ## 1: dotnet new mvc --no-https -o {ProjectName}
+```
 cd ProjectName
 code .
+```
 
 ## 2: Entity FrameWork
 #### --Add Package:
